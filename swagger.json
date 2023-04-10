@@ -1,0 +1,377 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Movies API",
+    "description": "Hsoub Academy - Node.js API course - Movies API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "hsoub.elmajdoub.live",
+  "basePath": "/nodejs/api",
+  "tags": [
+    {
+      "name": "Authentification",
+      "description": "API for authentification in the system"
+    },
+    {
+      "name": "Watchlist",
+      "description": "API for watchlist"
+    },
+    {
+      "name": "Movies",
+      "description": "API for movies in the system"
+    }
+  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentification"],
+        "description": "Login user in system",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "Email user that we want to login",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "description": "Password user that we want to login",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentification"],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Name user that we want to register",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "description": "Email user that we want to register",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "description": "Password user that we want to register",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Authentification"],
+        "description": "Get current user in system",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get current user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
+
+    "/watchlist/": {
+      "post": {
+        "tags": ["Watchlist"],
+        "description": "Add new watchlist for current user",
+        "parameters": [
+          {
+            "name": "movie",
+            "description": "movie that we want to add to watchlist",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "watched",
+            "description": "watched movie or not",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      }
+    },
+    "/watchlist/:movie": {
+      "delete": {
+        "tags": ["Watchlist"],
+        "description": "Delete movie from watchlist",
+        "parameters": [
+          {
+            "name": "movie",
+            "in": "params",
+            "description": "movie that we want to delete from watchlist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/watchlist": {
+      "get": {
+        "tags": ["Watchlist"],
+        "description": "Get Watch List for current user",
+        "responses": {
+          "200": {
+            "description": "Get current user",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        }
+      }
+    },
+
+    "/movies/": {
+      "post": {
+        "tags": ["Movies"],
+        "description": "Create new movie in system",
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Movie name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "description": "Movie category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "description": "Movie description",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New movie is created",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        }
+      }
+    },
+    "/movies/:id": {
+      "put": {
+        "tags": ["Movies"],
+        "description": "Update movie in system",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id",
+            "in": "params",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "description": "Movie name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "description": "Movie category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "description",
+            "description": "Movie description",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie is updated",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        }
+      }
+    },
+    "movies/:id": {
+      "delete": {
+        "tags": ["Movies"],
+        "description": "Delete movie in system",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id",
+            "in": "params",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/movies/?page": {
+      "get": {
+        "tags": ["Movies"],
+        "description": "Get movies with pagination",
+        "parameters": [
+          {
+            "name": "page",
+            "description": "Page number",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/movies/:id/": {
+      "get": {
+        "tags": ["Movies"],
+        "description": "Get movie by id",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id",
+            "in": "params",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/movies/:id/reviews/": {
+      "post": {
+        "tags": ["Movies"],
+        "description": "Create review for movie",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id to add review",
+            "in": "params",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/movies/:id/reviews": {
+      "get": {
+        "tags": ["Movies"],
+        "description": "Get single movie reviews",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id to get reviews",
+            "in": "params",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "required": ["name", "_id", "email", "password"],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "unique": true
+        },
+        "name": {
+          "type": "string",
+          "unique": true,
+          "maxLength": 50
+        },
+        "email": {
+          "type": "string",
+          "unique": true
+        },
+        "password": {
+          "type": "string",
+          "minLength": 8
+        },
+        "watchList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Movie"
+          }
+        },
+        "isAdmin": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "Movie": {
+      "required": ["name", "_id", "category", "description"],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "unique": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "rate": {
+          "type": "number",
+          "default": 0
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/User"
+          }
+        }
+      }
+    }
+  }
+}

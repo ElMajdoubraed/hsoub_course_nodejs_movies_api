@@ -3,6 +3,8 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const swaggerUI = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
@@ -18,6 +20,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/auth", authRouter);
 app.use("/api/movies", moviesRouter);
 app.use("/api/watchlist", watchlistRouter);
